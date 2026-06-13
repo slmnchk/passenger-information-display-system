@@ -24,7 +24,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     runtimeOnly 'org.postgresql:postgresql'
-    runtimeOnly 'com.h2database:h2'         // ДОБАВЛЯЕМ ЭТУ СТРОЧКУ (База данных в RAM)
 }
 
 tasks.named('test') {
