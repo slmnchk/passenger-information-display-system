@@ -42,4 +42,7 @@ public class DepartureService {
         return getJoinedTable(); // TODO: later should be filtered by city
     }
 
+    public void deleteJoinedDeparture(Integer id) {
+        liveDepartureRepository.deleteById(id);
+    }
 }
