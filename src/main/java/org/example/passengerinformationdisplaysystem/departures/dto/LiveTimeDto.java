@@ -1,4 +1,4 @@
-package org.example.passengerinformationdisplaysystem.model;
+package org.example.passengerinformationdisplaysystem.departures.dto;
 
 import java.time.LocalTime;
 

@@ -1,10 +1,7 @@
-package org.example.passengerinformationdisplaysystem.service;
+package org.example.passengerinformationdisplaysystem.departures;
 
-import org.example.passengerinformationdisplaysystem.model.LiveDeparture;
-import org.example.passengerinformationdisplaysystem.model.StatusOfDeparture;
-import org.example.passengerinformationdisplaysystem.repository.LiveDepartureRepository;
 import org.springframework.stereotype.Service;
-import org.example.passengerinformationdisplaysystem.model.JoinedDeparture;
+import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
 
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -17,25 +14,25 @@ public class DepartureService {
 
     private final LiveDepartureRepository liveDepartureRepository;
 
-    Map<Integer, List<JoinedDeparture>> departuresByCityId = new HashMap<>();
+    Map<Integer, List<JoinedDepartureDto>> departuresByCityId = new HashMap<>();
 
 
     public DepartureService(LiveDepartureRepository liveDepartureRepository) {
         this.liveDepartureRepository = liveDepartureRepository;
     }
 
-    public LiveDeparture createLiveDeparture(Integer tripId, LocalTime actualTime) {
-        LiveDeparture newLive = new LiveDeparture(tripId, actualTime);
+    public LiveDepartureEntity createLiveDeparture(Integer tripId, LocalTime actualTime) {
+        LiveDepartureEntity newLive = new LiveDepartureEntity(tripId, actualTime);
         return liveDepartureRepository.save(newLive);
     }
 
-    public List<JoinedDeparture> getJoinedTable() {
-        return List.of(new JoinedDeparture(
+    public List<JoinedDepartureDto> getJoinedTable() {
+        return List.of(new JoinedDepartureDto(
                 1, "1", "1", null, null, null, StatusOfDeparture.ON_TIME)
         ); // TODO: add a logic or/and real data
     }
 
-    public List<JoinedDeparture> getJoinedTableFilteredByCity(Integer cityId) {
+    public List<JoinedDepartureDto> getJoinedTableFilteredByCity(Integer cityId) {
         if(!departuresByCityId.containsKey(cityId)){
             throw new NoSuchElementException("City with id " + cityId + " not found");
         }

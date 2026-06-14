@@ -1,4 +1,4 @@
-package org.example.passengerinformationdisplaysystem.model;
+package org.example.passengerinformationdisplaysystem.departures;
 
 public enum StatusOfDeparture {
     ON_TIME,

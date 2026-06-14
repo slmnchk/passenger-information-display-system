@@ -1,9 +1,7 @@
-package org.example.passengerinformationdisplaysystem.controller;
+package org.example.passengerinformationdisplaysystem.departures;
 
-import org.example.passengerinformationdisplaysystem.model.JoinedDeparture;
-import org.example.passengerinformationdisplaysystem.model.LiveDeparture;
-import org.example.passengerinformationdisplaysystem.model.LiveTimeDto;
-import org.example.passengerinformationdisplaysystem.service.DepartureService;
+import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
+import org.example.passengerinformationdisplaysystem.departures.dto.LiveTimeDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +20,13 @@ public class DepartureController {
     }
 
     @GetMapping("/api/departures")
-    public List<JoinedDeparture> getAllDepartures() {
+    public List<JoinedDepartureDto> getAllDepartures() {
         logger.info("Called: getAllDepartures");
         return departureService.getJoinedTable();
     }
 
     @GetMapping("/{id}")
-    public List<JoinedDeparture> getDeparturesByCityId(
+    public List<JoinedDepartureDto> getDeparturesByCityId(
             @PathVariable("id") Integer id
     ) {
         logger.info("Called: getDeparturesByCityId with id: " + id);
@@ -36,7 +34,7 @@ public class DepartureController {
     }
 
     @PostMapping("/{id}")
-    public LiveDeparture createLiveDeparture(
+    public LiveDepartureEntity createLiveDeparture(
             @PathVariable("id") Integer id,
             @RequestBody LiveTimeDto timeDto
     ) {

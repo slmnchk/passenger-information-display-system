@@ -1,4 +1,4 @@
-package org.example.passengerinformationdisplaysystem.model;
+package org.example.passengerinformationdisplaysystem.departures;
 
 import jakarta.persistence.*;
 
@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "scheduled_departures")
-public class ScheduledDeparture {
+public class ScheduledDepartureEntity {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
@@ -26,5 +26,5 @@ public class ScheduledDeparture {
     @Column(name = "delay")
     private Duration delay;
 
-    public ScheduledDeparture(){}
+    public ScheduledDepartureEntity(){}
 }
