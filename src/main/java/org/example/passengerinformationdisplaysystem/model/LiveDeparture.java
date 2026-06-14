@@ -1,8 +1,7 @@
 package org.example.passengerinformationdisplaysystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalTime;
 
 @Entity
@@ -10,8 +9,11 @@ import java.time.LocalTime;
 public class LiveDeparture {
 
     @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer tripId;
 
+    @Column(name = "actual_time")
     private LocalTime actualTime;
 
     public LiveDeparture() {}
