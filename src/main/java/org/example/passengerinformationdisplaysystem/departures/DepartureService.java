@@ -1,45 +1,41 @@
 package org.example.passengerinformationdisplaysystem.departures;
 
+import org.example.passengerinformationdisplaysystem.departures.dto.CreateDepartureRequest;
+import org.example.passengerinformationdisplaysystem.departures.dto.DepartureResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
 public class DepartureService {
 
-    private final LiveDepartureRepository liveDepartureRepository;
+    private final ScheduledDepartureRepository repository;
+    private final DepartureMapper mapper;
 
-    Map<Integer, List<JoinedDepartureDto>> departuresByCityId = new HashMap<>();
-
-
-    public DepartureService(LiveDepartureRepository liveDepartureRepository) {
-        this.liveDepartureRepository = liveDepartureRepository;
+    public DepartureService(ScheduledDepartureRepository repository, DepartureMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public LiveDepartureEntity createLiveDeparture(Integer tripId, LocalTime actualTime) {
-        LiveDepartureEntity newLive = new LiveDepartureEntity(tripId, actualTime);
-        return liveDepartureRepository.save(newLive);
+    @Transactional(readOnly = true)
+    public Page<DepartureResponse> getAllDepartures(Pageable pageable) {
+        return repository.findAll(pageable).map(mapper::toResponse);
     }
 
-    public List<JoinedDepartureDto> getJoinedTable() {
-        return List.of(new JoinedDepartureDto(
-                1, "1", "1", null, null, null, StatusOfDeparture.ON_TIME)
-        ); // TODO: add a logic or/and real data
+    @Transactional
+    public DepartureResponse createDeparture(CreateDepartureRequest request) {
+        ScheduledDepartureEntity entity = mapper.toEntity(request);
+        ScheduledDepartureEntity savedEntity = repository.save(entity);
+        return mapper.toResponse(savedEntity);
     }
 
-    public List<JoinedDepartureDto> getJoinedTableFilteredByCity(Integer cityId) {
-        if(!departuresByCityId.containsKey(cityId)){
-            throw new NoSuchElementException("City with id " + cityId + " not found");
-        }
-        return getJoinedTable(); // TODO: later should be filtered by city
-    }
-
-    public void deleteJoinedDeparture(Integer id) {
-        liveDepartureRepository.deleteById(id);
+    @Transactional(readOnly = true)
+    public DepartureResponse getDepartureById(Long id) {
+        ScheduledDepartureEntity entity = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Departure with ID " + id + " not found"));
+        return mapper.toResponse(entity);
     }
 }

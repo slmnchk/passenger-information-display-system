@@ -1,7 +1,6 @@
 package org.example.passengerinformationdisplaysystem.departures;
 
 import jakarta.persistence.*;
-
 import java.time.LocalTime;
 
 @Entity
@@ -9,33 +8,16 @@ import java.time.LocalTime;
 public class LiveDepartureEntity {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer tripId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "actual_time")
+    @Column(name = "actual_time", nullable = false)
     private LocalTime actualTime;
 
     public LiveDepartureEntity() {}
 
-    public LiveDepartureEntity(Integer tripId, LocalTime actualTime) {
-        this.tripId = tripId;
-        this.actualTime = actualTime;
-    }
-
-    public Integer getTripId() {
-        return tripId;
-
-    }
-    public void setTripId(Integer tripId) {
-        this.tripId = tripId;
-    }
-
-    public LocalTime getActualTime() {
-        return actualTime;
-    }
-
-    public void setActualTime(LocalTime actualTime) {
-        this.actualTime = actualTime;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public LocalTime getActualTime() { return actualTime; }
+    public void setActualTime(LocalTime scheduledTime) { this.actualTime = actualTime; }
 }

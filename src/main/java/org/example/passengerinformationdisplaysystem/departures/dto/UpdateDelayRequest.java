@@ -1,4 +1,8 @@
 package org.example.passengerinformationdisplaysystem.departures.dto;
 
-public record UpdateDelayRequest() {
-}
+import java.time.LocalTime;
+
+public record UpdateDelayRequest(
+        Long id,
+        LocalTime actualTime
+) {}

@@ -1,4 +1,10 @@
 package org.example.passengerinformationdisplaysystem.departures.dto;
 
-public record DepartureResponse() {
-}
+import java.time.LocalTime;
+
+public record DepartureResponse(
+        Long id,
+        String trainLine,
+        String destination,
+        LocalTime scheduledTime
+) {}

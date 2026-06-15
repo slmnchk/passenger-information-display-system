@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 
 public record JoinedDepartureDto(
-        Integer tripId,
+        Long tripId,
         String trainLine,
         String destination,
         LocalTime scheduledTime,
