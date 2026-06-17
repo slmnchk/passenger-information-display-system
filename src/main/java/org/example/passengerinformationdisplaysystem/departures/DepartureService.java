@@ -1,8 +1,10 @@
 package org.example.passengerinformationdisplaysystem.departures;
 
+import jakarta.validation.Valid;
 import org.example.passengerinformationdisplaysystem.departures.dto.CreateDepartureRequest;
 import org.example.passengerinformationdisplaysystem.departures.dto.DepartureResponse;
 import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
+import org.example.passengerinformationdisplaysystem.departures.dto.LiveTimeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -71,7 +73,18 @@ public class DepartureService {
             );
         });
     }
-
+    public void updateLiveTime(Long id, @Valid LiveTimeDto request) {
+        ScheduledDepartureEntity entity = repository.findById(id)
+                .orElseThrow(()-> new NoSuchElementException("Departure not found"));
+        LiveDepartureEntity liveDeparture = entity.getLiveDeparture();
+        if (liveDeparture == null) {
+            liveDeparture = new LiveDepartureEntity();
+            liveDeparture.setScheduledDeparture(entity);
+            entity.setLiveDeparture(liveDeparture);
+        }
+        liveDeparture.setActualTime(request.actualTime());
+        repository.save(entity);
+    }
 
     private StatusOfDeparture calculateStatus(long delayMinutes) {
         if (delayMinutes >= 600) return StatusOfDeparture.DALAYED_BY_600_MINUTES;

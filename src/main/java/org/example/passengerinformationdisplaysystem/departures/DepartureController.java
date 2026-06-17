@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.passengerinformationdisplaysystem.departures.dto.CreateDepartureRequest;
 import org.example.passengerinformationdisplaysystem.departures.dto.DepartureResponse;
 import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
+import org.example.passengerinformationdisplaysystem.departures.dto.LiveTimeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -42,6 +43,15 @@ public class DepartureController {
     public ResponseEntity<Void> deleteDepartureById(@PathVariable Long id) {
         service.deleteDepartureById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/live")
+    public ResponseEntity<Void> updateLiveTime(
+            @PathVariable Long id,
+            @Valid @RequestBody LiveTimeDto request) {
+
+        service.updateLiveTime(id, request);
+        return ResponseEntity.ok().build(); // Возвращаем 200 OK без тела
     }
 
 }
