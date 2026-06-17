@@ -20,6 +20,9 @@ public class ScheduledDepartureEntity {
     @Column(name = "scheduled_time", nullable = false)
     private LocalTime scheduledTime;
 
+    @OneToOne(mappedBy = "scheduledDeparture", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private LiveDepartureEntity liveDeparture;
+
     public ScheduledDepartureEntity() {}
 
     public Long getId() { return id; }
@@ -30,4 +33,7 @@ public class ScheduledDepartureEntity {
     public void setDestination(String destination) { this.destination = destination; }
     public LocalTime getScheduledTime() { return scheduledTime; }
     public void setScheduledTime(LocalTime scheduledTime) { this.scheduledTime = scheduledTime; }
+
+    public LiveDepartureEntity getLiveDeparture() { return liveDeparture; }
+    public void setLiveDeparture(LiveDepartureEntity liveDeparture) { this.liveDeparture = liveDeparture; }
 }

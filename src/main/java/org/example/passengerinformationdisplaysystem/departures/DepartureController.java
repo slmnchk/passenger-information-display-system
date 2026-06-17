@@ -3,6 +3,7 @@ package org.example.passengerinformationdisplaysystem.departures;
 import jakarta.validation.Valid;
 import org.example.passengerinformationdisplaysystem.departures.dto.CreateDepartureRequest;
 import org.example.passengerinformationdisplaysystem.departures.dto.DepartureResponse;
+import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,15 +21,15 @@ public class DepartureController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<Page<DepartureResponse>> getAllDepartures(
-            @PageableDefault(size = 10, sort = "scheduledTime") Pageable pageable) {
-        return ResponseEntity.ok(service.getAllDepartures(pageable));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<DepartureResponse> getDepartureById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getDepartureById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<JoinedDepartureDto>> getAllJoinedDepartures(
+            @PageableDefault(size = 10, sort = "scheduledTime") Pageable pageable) {
+        return ResponseEntity.ok(service.getAllJoinedDepartures(pageable));
     }
 
     @PostMapping
@@ -42,4 +43,5 @@ public class DepartureController {
         service.deleteDepartureById(id);
         return ResponseEntity.noContent().build();
     }
+
 }
