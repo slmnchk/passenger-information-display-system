@@ -36,4 +36,10 @@ public class DepartureController {
         DepartureResponse response = service.createDeparture(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDepartureById(@PathVariable Long id) {
+        service.deleteDepartureById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
