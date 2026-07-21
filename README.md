@@ -5,22 +5,6 @@ Ein sehr primitive Version von PIDS, die man an Bahnhofen oder Haltestellen sowi
 
 ---
 
-## Tech Stack
+## Nutzung
 
-* **Spring Boot**
-* **Spring Data JPA** & **PostgreSQL**
-* **Jakarta Validation** (Eingabevalidierung)
-
----
-
-## Coming soon
-
-* **Nutzung der Programme mit Telegram-Bot**
-* **Weitere features wie z.B. Einführung von Login für Mitarbeiter**
-* **Primitives Frontend für mehr nutzerfreundliche Nutzung**
-
----
-
-## Are you here?
-
-****Lesen Sie das wirklich? Freut mich!****
+Die App ist unter https://slmnchk.github.io/passenger-information-display-system/ zu erreichen. 100% kostenlos. oder so.
