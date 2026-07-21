@@ -28,6 +28,7 @@ p, h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    margin-left: -5px;
 }
 
 .header-db-logo {
@@ -57,6 +58,7 @@ p, h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    padding-bottom: 5px;
 }
 
 .leave-your-message-container-logo {
@@ -68,9 +70,78 @@ p, h1, h2, h3, h4, h5, h6 {
     border-radius: 45px;
     background-color: rgb(255, 255, 255);
     flex-grow: 1;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
     padding: 20px;
     margin: 20px 0 0 0;
+    gap: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
+.request-body-function-button {
+    position: relative;
+    border-radius: 45px;
+    height: 75px;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    text-align: center;
+}
+
+.request-body-function-button-text {
+    font-family: "Apple SD Gothic Neo", sans-serif;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.hoverable-button:hover {
+    background-color: rgb(100, 100, 100);
+    cursor: pointer;
+}
+
+.hoverable-icon:hover {
+    cursor: pointer;
+}
+
+.request-body-function-button.active {
+    background-color: rgb(224, 6, 19);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.request-body-function-button.active:hover {
+    background-color: rgb(200, 5, 15);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
