@@ -8,3 +8,7 @@ Ein sehr primitive Version von PIDS, die man an Bahnhofen oder Haltestellen sowi
 ## Nutzung
 
 Die App ist unter https://slmnchk.github.io/passenger-information-display-system/ zu erreichen. 100% kostenlos. oder so.
+
+## Achtung!
+
+Die App ist für mobile Geräte **NICHT** optimiert.
