@@ -49,9 +49,8 @@ public class DepartureController {
     public ResponseEntity<Void> updateLiveTime(
             @PathVariable Long id,
             @Valid @RequestBody LiveTimeDto request) {
-
         service.updateLiveTime(id, request);
-        return ResponseEntity.ok().build(); // Возвращаем 200 OK без тела
+        return ResponseEntity.ok().build();
     }
 
 }

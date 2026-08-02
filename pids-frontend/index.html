@@ -46,6 +46,7 @@
                 <thead>
                 <tr>
                     <th>Zeit</th>
+                    <th>Erwartete Abfahrtszeit</th>
                     <th>Zug</th>
                     <th>Ziel</th>
                     <th>Gleis</th>
@@ -53,23 +54,25 @@
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr>
-                    <td>14:20</td>
-                    <td>ICE 594</td>
-                    <td>Hamburg Hbf</td>
-                    <td>3</td>
-                    <td style="color: green; font-weight: bold;">pünktlich</td>
-                </tr>
-                <tr>
-                    <td>14:25</td>
-                    <td>RE 3</td>
-                    <td>München Hbf</td>
-                    <td>1</td>
-                    <td style="color: orange; font-weight: bold;">ca. +10 Min</td>
-                </tr>
                 </tbody>
             </table>
         </div>
+
+        <div id="update-form-container" class="hidden" style="grid-column: 1 / -1; width: 100%; max-width: 400px; margin: 20px auto;">
+            <form id="update-live-form" style="display: flex; flex-direction: column; gap: 12px;">
+                <label style="font-family: sans-serif; font-weight: bold;">ID der Reise:</label>
+                <input type="number" id="trip-id" required placeholder="zum Beispiel: 4" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+
+                <label style="font-family: sans-serif; font-weight: bold;">Aktuelle Abfahrtszeit (HH:MM):</label>
+                <input type="text" id="actual-time" required placeholder="zum Beispiel: 12:52" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+
+                <button type="submit" class="hoverable-button" style="background-color: black; color: white; padding: 12px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; text-transform: uppercase;">
+                    Aktualisieren
+                </button>
+            </form>
+            <div id="form-response-message" style="margin-top: 15px; text-align: center; font-family: sans-serif; font-weight: bold;"></div>
+        </div>
+
     </div>
 
 

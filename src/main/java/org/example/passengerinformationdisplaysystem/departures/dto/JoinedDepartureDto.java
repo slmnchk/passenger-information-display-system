@@ -11,6 +11,6 @@ public record JoinedDepartureDto(
         String destination,
         LocalTime scheduledTime,
         LocalTime actualTime,
-        Duration delay,
+        long delay,
         StatusOfDeparture statusOfDeparture
 ) {}

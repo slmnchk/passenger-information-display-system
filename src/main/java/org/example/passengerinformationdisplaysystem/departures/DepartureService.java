@@ -58,9 +58,9 @@ public class DepartureService {
                     ? entity.getLiveDeparture().getActualTime()
                     : entity.getScheduledTime();
 
-            Duration delay = Duration.between(entity.getScheduledTime(), actual);
+            long delay = Duration.between(entity.getScheduledTime(), actual).toMinutes();
 
-            StatusOfDeparture status = calculateStatus(delay.toMinutes());
+            StatusOfDeparture status = calculateStatus(delay);
 
             return new JoinedDepartureDto(
                     entity.getId(),
@@ -73,6 +73,8 @@ public class DepartureService {
             );
         });
     }
+
+    @Transactional
     public void updateLiveTime(Long id, @Valid LiveTimeDto request) {
         ScheduledDepartureEntity entity = repository.findById(id)
                 .orElseThrow(()-> new NoSuchElementException("Departure not found"));
