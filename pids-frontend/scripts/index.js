@@ -57,14 +57,11 @@ async function fetchDepartures() {
         departures.forEach(dept => {
             const tr = document.createElement('tr');
 
-            let statusText = 'pünktlich';
             let statusColor = 'green';
 
-            if (dept.statusOfDeparture && dept.statusOfDeparture !== 'ON_TIME') {
-                statusColor = 'orange';
-                const delayMinutes = dept.delay ? Math.floor(dept.delay / 60) : 0;
-                statusText = `ca. +${delayMinutes} Min`;
-            }
+            if (dept.statusOfDeparture && (dept.statusOfDeparture !== 'ON_TIME' && dept.statusOfDeparture !== 'CANCELLED')) statusColor = 'orange';
+            else if (dept.statusOfDeparture && (dept.statusOfDeparture !== 'ON_TIME' && dept.statusOfDeparture === 'CANCELLED')) statusColor = 'red';
+
 
             tr.innerHTML = `
                 <td>${dept.scheduledTime || ''}</td>
@@ -108,7 +105,9 @@ async function handleUpdateLiveTime(event) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ actualTime: actualTime })
+            body: JSON.stringify({
+                actualTime: actualTime
+            })
         });
 
         if (response.ok) {
@@ -124,7 +123,7 @@ async function handleUpdateLiveTime(event) {
         }
 
     } catch (error) {
-        console.error('Ошибка сети при запросе POST /departures/{id}/live:', error);
+        console.error('network error at POST/departures/{id}/live:', error);
         responseMessageEl.style.color = 'red';
         responseMessageEl.textContent = 'Server nicht erreichbar!';
     }

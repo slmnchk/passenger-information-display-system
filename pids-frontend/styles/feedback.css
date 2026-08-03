@@ -1,0 +1,58 @@
+body {
+    background-color: rgb(228, 231, 234);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.messageme-container{
+    position: relative;
+    border-radius: 45px;
+    height: 75px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    text-align: center;
+}
+
+.messageme-header-text{
+    font-family: "Apple SD Gothic Neo", sans-serif;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.feedback-container{
+    position: relative;
+    border-radius: 45px;
+    height: auto;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.feedback-container-text{
+    font-family: "Apple SD Gothic Neo", sans-serif;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.hoverable-button:hover {
+    background-color: rgb(100, 100, 100);
+    cursor: pointer;
+}

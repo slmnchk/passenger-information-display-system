@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/4/4f/Deutsche_Bundesbahn.svg">
+    <link rel="stylesheet" href="styles/feedback.css">
+    <title>Feedback</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1YBCXTC22Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1YBCXTC22Y');
+    </script>
+</head>
+
+<body>
+    <div class="messageme-container">
+        <div class="messageme-header-text">Here you can leave a message for me</div>
+    </div>
+
+
+    <div id="feedback-form-container" class="hidden" style="grid-column: 1 / -1; width: 100%; max-width: 400px; margin: 20px auto;">
+        <form id="feedback-form" style="display: flex; flex-direction: column; gap: 12px;">
+            <label style="font-family: sans-serif; font-weight: bold;">Dein Name:</label>
+            <input type="text" id="feedback-name" required placeholder="Max Mustermannko Mustermannovitsch oder auch e-mail" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+
+            <label style="font-family: sans-serif; font-weight: bold;">Dein Nachricht an mich:</label>
+            <input type="text" id="feedback-message" required placeholder="Hallo! Ich benutzte WhatsApp." style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+
+            <button type="submit" class="hoverable-button" style="background-color: black; color: white; padding: 12px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; text-transform: uppercase;">
+                Submit
+            </button>
+        </form>
+        <div id="feedback-response-message" style="margin-top: 15px; text-align: center; font-family: sans-serif; font-weight: bold;"></div>
+    </div>
+
+
+<script src="scripts/feedback.js"></script>
+</body>
+</html>
