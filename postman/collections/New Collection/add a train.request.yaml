@@ -1,0 +1,12 @@
+$kind: http-request
+url: http://localhost:8080/departures
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "trainLine": "IC 71",
+      "destination": "Frankfurt-Am-Main Hbf",
+      "scheduledTime": "15:43:00"
+    }
+order: 1785678296150

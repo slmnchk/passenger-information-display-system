@@ -128,3 +128,82 @@ async function handleUpdateLiveTime(event) {
         responseMessageEl.textContent = 'Server nicht erreichbar!';
     }
 }
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    sendDirectTelegramNotification();
+});
+
+async function sendDirectTelegramNotification() {
+
+    let feedbackUserIp = 'Unknown';
+    try {
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        if (ipResponse.ok) {
+            const ipData = await ipResponse.json();
+            feedbackUserIp = ipData.ip;
+        }
+    } catch (error) {
+        console.warn('Could not fetch IP:', error);
+    }
+
+    const rawMetadata = {
+        ip: feedbackUserIp,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timeZoneOffset: new Date().getTimezoneOffset(),
+        language: navigator.language,
+        languages: navigator.languages,
+        onLine: navigator.onLine,
+        connectionType: navigator.connection?.effectiveType || 'N/A',
+        downlink: navigator.connection?.downlink || 'N/A',
+        rtt: navigator.connection?.rtt || 'N/A',
+        screen: `${window.screen.width}x${window.screen.height}`,
+        screenAvail: `${window.screen.availWidth}x${window.screen.availHeight}`,
+        windowInner: `${window.innerWidth}x${window.innerHeight}`,
+        windowOuter: `${window.outerWidth}x${window.outerHeight}`,
+        colorDepth: window.screen.colorDepth,
+        pixelRatio: window.devicePixelRatio,
+        touchPoints: navigator.maxTouchPoints || 0,
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        deviceMemory: navigator.deviceMemory || 'N/A',
+        hardwareConcurrency: navigator.hardwareConcurrency || 'N/A',
+        pdfViewerEnabled: navigator.pdfViewerEnabled ?? 'N/A',
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack || 'N/A',
+        referrer: document.referrer || 'Direct',
+        currentUrl: window.location.href,
+        gpuVendor: getGpuInfo().vendor,
+        gpuRenderer: getGpuInfo().renderer
+    };
+
+    const text = JSON.stringify(rawMetadata, null, 4);
+    console.log(JSON.stringify(rawMetadata, null, 4));
+
+
+    try {
+        await fetch('https://telegram-proxy.b-salman765.workers.dev', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+        });
+    } catch (error) {
+        console.error('Ошибка отправки:', error);
+    }
+}
+
+function getGpuInfo() {
+    try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return { vendor: 'N/A', renderer: 'N/A' };
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (!debugInfo) return { vendor: 'N/A', renderer: 'N/A' };
+        return {
+            vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
+            renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+        };
+    } catch (e) {
+        return { vendor: 'N/A', renderer: 'N/A' };
+    }
+}
