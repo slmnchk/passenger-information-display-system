@@ -18,8 +18,11 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew bootJar -x test
 
       - name: Copy JAR to GCP
         uses: appleboy/scp-action@v0.1.7
@@ -27,9 +30,9 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "target/*.jar"
+          source: "build/libs/*.jar"
           target: "~/app/"
-          strip_components: 1
+          strip_components: 2
 
       - name: Restart Application on GCP
         uses: appleboy/ssh-action@v1.0.3
