@@ -14,19 +14,8 @@ async function sendFeedbackMessage(event) {
     const feedbackMessage = document.getElementById('feedback-message').value.trim();
     const feedbackResponseMessageEl = document.getElementById('feedback-response-message');
 
-    let feedbackUserIp = 'Unknown';
-    try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        if (ipResponse.ok) {
-            const ipData = await ipResponse.json();
-            feedbackUserIp = ipData.ip;
-        }
-    } catch (error) {
-        console.warn('Could not fetch IP:', error);
-    }
 
     const rawMetadata = {
-        ip: feedbackUserIp,
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         timeZoneOffset: new Date().getTimezoneOffset(),
         language: navigator.language,
