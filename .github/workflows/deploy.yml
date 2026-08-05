@@ -34,10 +34,15 @@ jobs:
           target: "~/app/"
           strip_components: 2
 
-      - name: Restart Application on GCP
+      - name: Clean Old Files and Restart Application on GCP
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: sudo systemctl restart pids-backend
+            host: ${{ secrets.SERVER_HOST }}
+            username: ${{ secrets.SERVER_USER }}
+            key: ${{ secrets.SERVER_SSH_KEY }}
+            script: |
+              cd ~/app && ls -t *.jar 2>/dev/null | tail -n +2 | xargs rm -f 2>/dev/null || true
+              if [ -f ~/app/app.log ] && [ $(stat -c%s ~/app/app.log) -gt 52428800 ]; then
+                truncate -s 0 ~/app/app.log
+              fi
+              sudo systemctl restart pids-backend
