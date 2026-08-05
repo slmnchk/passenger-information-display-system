@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://34.55.160.7:8080';
+const API_BASE_URL = 'http://34.63.211.154:8080';
 
 window.addEventListener('DOMContentLoaded', () => {
     const feedbackForm = document.getElementById('feedback-form');
