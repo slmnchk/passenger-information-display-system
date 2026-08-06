@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://34.63.211.154:8080';
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8080'
+    : 'https://api.salmanchik.com';
 
 window.addEventListener('DOMContentLoaded', () => {
     const updateForm = document.getElementById('update-live-form');
