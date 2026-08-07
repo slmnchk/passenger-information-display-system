@@ -18,6 +18,7 @@ async function sendFeedbackMessage(event) {
 
 
     const rawMetadata = {
+        usedPage: 'Feedback',
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         timeZoneOffset: new Date().getTimezoneOffset(),
         language: navigator.language,

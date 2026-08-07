@@ -141,6 +141,7 @@ async function sendDirectTelegramNotification() {
 
 
     const rawMetadata = {
+        usedPage: 'Index',
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         timeZoneOffset: new Date().getTimezoneOffset(),
         language: navigator.language,
