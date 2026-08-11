@@ -89,7 +89,7 @@ public class DepartureService {
     }
 
     private StatusOfDeparture calculateStatus(long delayMinutes) {
-        if (delayMinutes >= 600) return StatusOfDeparture.DALAYED_BY_600_MINUTES;
+        if (delayMinutes >= 600) return StatusOfDeparture.DELAYED_BY_600_MINUTES;
         if (delayMinutes >= 60)  return StatusOfDeparture.DELAYED_BY_60_MINUTES;
         if (delayMinutes >= 45)  return StatusOfDeparture.DELAYED_BY_45_MINUTES;
         if (delayMinutes >= 30)  return StatusOfDeparture.DELAYED_BY_30_MINUTES;

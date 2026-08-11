@@ -2,8 +2,6 @@ package org.example.passengerinformationdisplaysystem.feedback;
 
 import jakarta.persistence.*;
 
-import java.lang.classfile.constantpool.InvokeDynamicEntry;
-
 @Entity
 @Table(name = "feedback")
 public class FeedbackEntity {
