@@ -79,19 +79,20 @@ function renderDepartureRow(dept: JoinedDeparture): HTMLTableRowElement {
     // TODO: add statusOfDeparture CANCELLED
     const statusColor = dept.statusOfDeparture === 'ON_TIME' ? 'green' : 'orange';
 
-    const makeCell = (text: string): HTMLTableCellElement => {
+    const makeCell = (text: string, label: string): HTMLTableCellElement => {
         const td = document.createElement('td');
         td.textContent = text;
+        td.setAttribute('data-label', label);
         return td;
     };
 
-    tr.appendChild(makeCell(dept.scheduledTime ?? ''));
-    tr.appendChild(makeCell(dept.actualTime ?? dept.scheduledTime ?? ''));
-    tr.appendChild(makeCell(dept.trainLine ?? ''));
-    tr.appendChild(makeCell(dept.destination ?? ''));
-    tr.appendChild(makeCell(String(dept.tripId ?? '')));
+    tr.appendChild(makeCell(dept.scheduledTime.slice(0,5) ?? '', 'Zeit'));
+    tr.appendChild(makeCell(dept.actualTime.slice(0,5) ?? dept.scheduledTime.slice(0,5) ?? '', 'Erwartet'));
+    tr.appendChild(makeCell(dept.trainLine ?? '', 'Zug'));
+    tr.appendChild(makeCell(dept.destination ?? '', 'Ziel'));
+    tr.appendChild(makeCell(String(dept.tripId ?? ''), 'Gleis'));
 
-    const statusCell = makeCell(dept.statusOfDeparture);
+    const statusCell = makeCell(dept.statusOfDeparture, 'Status');
     statusCell.style.color = statusColor;
     statusCell.style.fontWeight = 'bold';
     tr.appendChild(statusCell);
