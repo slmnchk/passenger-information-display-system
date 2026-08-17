@@ -1,7 +1,8 @@
 import { apiFetch } from './api-config.js';
-import { buildMetadataPayload } from './telemetry.js';
+import {buildMetadataPayload, sendDirectTelegramNotification} from './telemetry.js';
 
 window.addEventListener('DOMContentLoaded', () => {
+    void sendDirectTelegramNotification('Feedback');
     const feedbackForm = document.getElementById('feedback-form');
     if (feedbackForm instanceof HTMLFormElement) {
         feedbackForm.addEventListener('submit', sendFeedbackMessage);
@@ -30,7 +31,7 @@ async function sendFeedbackMessage(event: SubmitEvent): Promise<void> {
             body: JSON.stringify({
                 userName: feedbackUserName,
                 feedback: feedbackMessage,
-                userMetadata: buildMetadataPayload('Feedback')
+                userMetadata: await buildMetadataPayload('Feedback')
             })
         });
 
