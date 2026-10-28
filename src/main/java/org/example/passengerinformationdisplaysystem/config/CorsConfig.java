@@ -1,5 +1,7 @@
 package org.example.passengerinformationdisplaysystem.config;
 
+import org.jspecify.annotations.NonNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -9,25 +11,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig {
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public WebMvcConfigurer corsConfigurer(
+            @Value("${app.cors.allowed-origins}") String[] allowedOrigins) {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(
-                                "http://salmanchik.com",
-                                "https://salmanchik.com",
-                                "http://api.salmanchik.com",
-                                "https://api.salmanchik.com",
-                                "http://slmnchk.github.io",
-                                "https://slmnchk.github.io",
-                                "http://localhost:3000",
-                                "http://localhost:63342",
-                                "http://127.0.0.1:5500")
+                        .allowedOrigins(allowedOrigins)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowedHeaders("*");
             }
         };
     }
+
 }

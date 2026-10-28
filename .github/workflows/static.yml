@@ -39,13 +39,19 @@ jobs:
         working-directory: ./pids-frontend
         run: npm run build
 
+      - name: Prepare site
+        run: |
+          mkdir site
+          cp pids-frontend/*.html site/
+          cp -r pids-frontend/scripts pids-frontend/styles site/        
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './pids-frontend'
+          path: './site'
 
       - name: Deploy to GitHub Pages
         id: deployment

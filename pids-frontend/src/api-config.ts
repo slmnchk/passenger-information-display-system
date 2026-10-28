@@ -1,9 +1,10 @@
 import type { ApiErrorResponse } from './types.js';
 
-export const API_BASE_URL: string =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:8080'
-        : 'https://api.salmanchik.com';
+const PROD_HOSTS = ['salmanchik.com', 'slmnchk.github.io'];
+
+export const API_BASE_URL: string = PROD_HOSTS.includes(window.location.hostname)
+    ? 'https://api.salmanchik.com'
+    : '/api';
 
 
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {

@@ -4,6 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+.env
+.DS_Store
+.agents
+### TODO: add tests!!!!!!! ###
+.test.http
 
 ### STS ###
 .apt_generated

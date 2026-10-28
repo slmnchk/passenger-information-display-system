@@ -1,0 +1,15 @@
+### POST to post;)))
+POST http://localhost:8080/departures
+Content-Type: application/json
+
+{
+  "trainLine": "IC 71",
+  "destination": "Frankfurt-Am-Main Hbf",
+  "scheduledTime": "15:43:00"
+}
+
+### DELETE by ID in URL
+DELETE http://localhost:8080/departures/5
+
+### GET by ID
+GET http://localhost:8080/departures/5
