@@ -11,6 +11,8 @@ export interface JoinedDeparture {
     tripId: number;
     trainLine: string;
     destination: string;
+    origin: string | null;
+    platform: string | null;
     scheduledTime: string;
     actualTime: string;
     delay: number;
