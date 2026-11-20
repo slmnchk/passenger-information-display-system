@@ -17,6 +17,10 @@ public class ScheduledDepartureEntity {
     @Column(name = "destination", nullable = false)
     private String destination;
 
+    private String origin;
+
+    private String platform;
+
     @Column(name = "scheduled_time", nullable = false)
     private LocalTime scheduledTime;
 
@@ -31,6 +35,10 @@ public class ScheduledDepartureEntity {
     public void setTrainLine(String trainLine) { this.trainLine = trainLine; }
     public String getDestination() { return destination; }
     public void setDestination(String destination) { this.destination = destination; }
+    public String getOrigin() { return origin; }
+    public void setOrigin(String origin) { this.origin = origin; }
+    public String getPlatform() { return platform; }
+    public void setPlatform(String platform) { this.platform = platform; }
     public LocalTime getScheduledTime() { return scheduledTime; }
     public void setScheduledTime(LocalTime scheduledTime) { this.scheduledTime = scheduledTime; }
 
