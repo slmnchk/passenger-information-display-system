@@ -1,15 +1,47 @@
-### POST to post;)))
-POST http://localhost:8080/departures
+@api = http://localhost:3000/api
+
+### Browse departures from Mannheim
+GET {{api}}/departures?origin=Mannheim
+
+### Get one departure by ID
+GET {{api}}/departures/5
+
+### Add one departure using the original fields
+POST {{api}}/departures
 Content-Type: application/json
 
 {
   "trainLine": "IC 71",
-  "destination": "Frankfurt-Am-Main Hbf",
-  "scheduledTime": "15:43:00"
+  "destination": "Frankfurt Hbf",
+  "scheduledTime": "15:43"
 }
 
-### DELETE by ID in URL
-DELETE http://localhost:8080/departures/5
+### Add three departures in one request
+POST {{api}}/departures/batch
+Content-Type: application/json
 
-### GET by ID
-GET http://localhost:8080/departures/5
+{
+  "departures": [
+    {"origin": "Frankfurt", "platform": "Gleis 2", "scheduledTime": "13:00"},
+    {"origin": "Darmstadt", "platform": "Gleis 2", "scheduledTime": "14:00"},
+    {"origin": "Mannheim", "platform": "Gleis 2", "scheduledTime": "15:00"}
+  ]
+}
+
+### Update the expected time for all departures from Mannheim
+PATCH {{api}}/departures/live
+Content-Type: application/json
+
+{
+  "origin": "Mannheim",
+  "actualTime": "15:20"
+}
+
+### Preview the first page of departures with IDs greater than 5
+GET {{api}}/departures?idGreaterThan=5
+
+### Delete all departures with IDs greater than 5 from the local database
+DELETE {{api}}/departures?idGreaterThan=5
+
+### Delete just one departure from the local database
+DELETE {{api}}/departures/5
