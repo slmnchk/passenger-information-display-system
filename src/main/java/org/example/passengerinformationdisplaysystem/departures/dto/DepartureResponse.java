@@ -6,5 +6,7 @@ public record DepartureResponse(
         Long id,
         String trainLine,
         String destination,
-        LocalTime scheduledTime
+        LocalTime scheduledTime,
+        String origin,
+        String platform
 ) {}

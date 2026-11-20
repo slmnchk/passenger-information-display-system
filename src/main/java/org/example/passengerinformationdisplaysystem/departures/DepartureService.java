@@ -1,17 +1,18 @@
 package org.example.passengerinformationdisplaysystem.departures;
 
-import jakarta.validation.Valid;
 import org.example.passengerinformationdisplaysystem.departures.dto.CreateDepartureRequest;
 import org.example.passengerinformationdisplaysystem.departures.dto.DepartureResponse;
 import org.example.passengerinformationdisplaysystem.departures.dto.JoinedDepartureDto;
 import org.example.passengerinformationdisplaysystem.departures.dto.LiveTimeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -32,9 +33,18 @@ public class DepartureService {
 
     @Transactional
     public DepartureResponse createDeparture(CreateDepartureRequest request) {
-        ScheduledDepartureEntity entity = mapper.toEntity(request);
-        ScheduledDepartureEntity savedEntity = repository.save(entity);
-        return mapper.toResponse(savedEntity);
+        return createDepartures(List.of(request)).getFirst();
+    }
+
+    @Transactional
+    public List<DepartureResponse> createDepartures(List<CreateDepartureRequest> requests) {
+        List<ScheduledDepartureEntity> departures = requests.stream().map(mapper::toEntity).toList();
+        for (ScheduledDepartureEntity departure : departures) {
+            if (departure.getOrigin() == null && departure.getDestination().isEmpty()) {
+                throw new IllegalArgumentException("Each departure needs an origin or a destination");
+            }
+        }
+        return repository.saveAll(departures).stream().map(mapper::toResponse).toList();
     }
 
     @Transactional(readOnly = true)
@@ -45,13 +55,30 @@ public class DepartureService {
     }
 
 
+    @Transactional
     public void deleteDepartureById(Long id) {
-        repository.deleteById(id);
+        repository.findScheduledDepartureById(id).ifPresent(repository::delete);
+    }
+
+    @Transactional
+    public int deleteDeparturesAfterId(long idGreaterThan) {
+        List<ScheduledDepartureEntity> departures = repository.findByIdGreaterThanOrderById(idGreaterThan);
+        repository.deleteAll(departures);
+        return departures.size();
     }
 
     @Transactional(readOnly = true)
-    public Page<JoinedDepartureDto> getAllJoinedDepartures(Pageable pageable) {
-        Page<ScheduledDepartureEntity> scheduledPage = repository.findAll(pageable);
+    public Page<JoinedDepartureDto> getAllJoinedDepartures(Pageable pageable, String origin, Long idGreaterThan) {
+        Specification<ScheduledDepartureEntity> filter = Specification.unrestricted();
+        if (origin != null) {
+            String station = origin.strip();
+            filter = filter.and((root, query, cb) -> cb.equal(
+                    cb.upper(root.get("origin")), cb.upper(cb.literal(station))));
+        }
+        if (idGreaterThan != null) {
+            filter = filter.and((root, query, cb) -> cb.gt(root.get("id"), idGreaterThan));
+        }
+        Page<ScheduledDepartureEntity> scheduledPage = repository.findAll(filter, pageable);
 
         return scheduledPage.map(entity -> {
             LocalTime actual = (entity.getLiveDeparture() != null)
@@ -69,22 +96,35 @@ public class DepartureService {
                     entity.getScheduledTime(),
                     actual,
                     delay,
-                    status
+                    status,
+                    entity.getOrigin(),
+                    entity.getPlatform()
             );
         });
     }
 
     @Transactional
-    public void updateLiveTime(Long id, @Valid LiveTimeDto request) {
-        ScheduledDepartureEntity entity = repository.findById(id)
-                .orElseThrow(()-> new NoSuchElementException("Departure not found"));
+    public void updateLiveTime(Long id, LiveTimeDto request) {
+        ScheduledDepartureEntity entity = repository.findScheduledDepartureById(id)
+                .orElseThrow(() -> new NoSuchElementException("Departure with ID " + id + " not found"));
+        setActualTime(entity, request.actualTime());
+    }
+
+    @Transactional
+    public int updateLiveTimesByOrigin(String origin, LocalTime actualTime) {
+        List<ScheduledDepartureEntity> departures = repository.findByOriginIgnoreCaseOrderById(origin.strip());
+        departures.forEach(departure -> setActualTime(departure, actualTime));
+        return departures.size();
+    }
+
+    private void setActualTime(ScheduledDepartureEntity entity, LocalTime actualTime) {
         LiveDepartureEntity liveDeparture = entity.getLiveDeparture();
         if (liveDeparture == null) {
             liveDeparture = new LiveDepartureEntity();
             liveDeparture.setScheduledDeparture(entity);
             entity.setLiveDeparture(liveDeparture);
         }
-        liveDeparture.setActualTime(request.actualTime());
+        liveDeparture.setActualTime(actualTime);
         repository.save(entity);
     }
 

@@ -2,7 +2,6 @@ package org.example.passengerinformationdisplaysystem.departures.dto;
 
 import org.example.passengerinformationdisplaysystem.departures.StatusOfDeparture;
 
-import java.time.Duration;
 import java.time.LocalTime;
 
 public record JoinedDepartureDto(
@@ -12,5 +11,7 @@ public record JoinedDepartureDto(
         LocalTime scheduledTime,
         LocalTime actualTime,
         long delay,
-        StatusOfDeparture statusOfDeparture
+        StatusOfDeparture statusOfDeparture,
+        String origin,
+        String platform
 ) {}
