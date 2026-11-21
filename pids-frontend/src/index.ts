@@ -14,8 +14,10 @@ let pageNumber = 0;
 let filters = new URLSearchParams();
 let boardRequest: AbortController | undefined;
 
+// @ts-ignore
 for (const tab of tabs) {
     tab.addEventListener('click', () => {
+        // @ts-ignore
         for (const button of tabs) {
             const active = button === tab;
             button.setAttribute('aria-pressed', String(active));
